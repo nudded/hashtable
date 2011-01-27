@@ -87,7 +87,7 @@ void hash_map_add(key_type key, void * data, hash_map * map) {
 
         /* distribute bucket's contents over the new and old bucket */
         for(i = 0; i < bucket->amount; i ++) {
-            int important_bit = bucket->contents[i]->hash & (1 << bucket->bits);
+            int important_bit = bit_index(bucket->contents[i]->hash, bucket->bits) & 1;
 
             if (important_bit == 1) {
                 new_bucket->contents[new_bucket->amount] = bucket->contents[i];
