@@ -85,6 +85,7 @@ void hash_map_add(key_type key, void * data, hash_map * map) {
         /* set new_bucket's bits and increment the old one too */
         new_bucket->bits = ++(bucket->bits);
 
+        /* distribute bucket's contents over the new and old bucket */
         for(i = 0; i < bucket->amount; i ++) {
             int important_bit = bucket->contents[i]->hash & (1 << bucket->bits);
 
@@ -102,7 +103,7 @@ void hash_map_add(key_type key, void * data, hash_map * map) {
 
         map->array[index+1] = new_bucket; 
 
-        /* this is the bucket we should at to */
+        /* this is the bucket we should add to */
         index = bit_index(hash, map->bit_size);
         bucket = map->array[index];
     }
